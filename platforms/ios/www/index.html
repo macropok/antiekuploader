@@ -1,0 +1,625 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Antiek Uploader</title>
+	<link href="css/jquery.mobile-1.2.0.min.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.mobile-1.2.0.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+	<script>
+		// all dialog buttons should close their parent dialog
+		$(".ui-dialog button").live("click", function() {		
+			$("[data-role='dialog']").dialog("close");		
+		});
+		$(document).on("mobileinit", function(){
+		  $.mobile.defaultPageTransition = "slide";
+		});
+	</script>
+
+	<style>
+		#footerTabs {
+			background: #FFF -webkit-radial-gradient(circle, #FFF, #dee2e4);
+		}
+		.ui-listview sup {
+			font-size: 0.6em;
+			color: #cc0000;
+		}
+	</style>
+
+</head> 
+<body>
+
+<div data-role="page" id="login-page">
+
+    <div data-role="content" class="login">
+
+            <br/><br/><br/><br/><br/><br/>
+            <div data-role="fieldcontain">
+                <input type="text" name="user_name" id="user_name" value="" placeholder="Enter Username">
+            </div>
+            <div data-role="fieldcontain">
+                <input type="text" name="user_password" id="user_password" value="" placeholder="Enter Password">
+            </div>
+            <div data-role="fieldcontain">
+                <input type="text" name="user_website" id="user_website" value="" placeholder="www.yourwebsite.com">
+            </div>
+            <a href="#home-page" id="btn-login" data-role="button" class="ui-btn-plain">Login</a>
+
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="home-page">
+ 
+	<div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+		<h1>Item Upload</h1>
+        <a href="#settings-page" data-icon="gear" data-iconpos="notext" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b" class="ui-btn-right">Settings</a>
+
+	</div><!-- /header --> 
+ 
+	<div data-role="content">
+        <div><img src="img/logo.png" title="Antiek Uploader" style="width:100%;"/></div>
+		<!--<p>Welcome to the iOS-Inspired jQuery Mobile theme by <a href="http://twitter.com/taitems" target="_blank">@taitems</a>. Feel free to have a look around and report and bugs to the <a href="https://github.com/taitems/iOS-Inspired-jQuery-Mobile-Theme/issues" target="_blank">GitHub issues page</a>.</p>
+		<ul data-role="listview" data-inset="true">
+			<li><a href="#headers" class="ui-btn-plain">Header Bars</a></li>
+			<li><a href="#headerButtons" class="ui-btn-plain">Header Buttons</a></li>
+			<li><a href="#footerTabs" class="ui-btn-plain">Footer Tabs</a></li>
+			<li><a href="#formElements" class="ui-btn-plain">Form Elements</a></li>
+			<li><a href="#listViews" class="ui-btn-plain">List Views</a></li>
+			<li><a href="#dialogs" class="ui-btn-plain">Dialogs</a></li>
+			<li><a href="#popups" class="ui-btn-plain">Popups <sup>New!</sup></a></li>
+		</ul>-->
+        <br/><br/>
+        <a href="#upload-mainitem" data-role="button" class="ui-btn-plain">Upload New Item</a>
+        <a href="#view-items" data-role="button" class="ui-btn-plain">View Items</a>
+        <a href="http://m.antiek.com" target="_blank" data-role="button" class="ui-btn-plain">Check ANTIQ.com</a>
+					
+		<br />
+			
+		<br />
+ 
+		</div><!-- /ui-body wrapper -->	
+</div><!-- /page -->
+
+<div data-role="page" id="settings-page">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Settings</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Back</a>
+
+    </div><!-- /header -->
+
+    <div data-role="content" class="summary">
+        <br/><br/><br/><br/><br/><br/>
+        <a href="#reload-categories" data-role="button" class="ui-btn-plain">Reload Categories</a>
+        <a href="#logout" data-role="button" class="ui-btn-plain">Logout</a>
+        <br/>
+        <a href="#home-page" data-role="button" class="ui-btn-plain">Close</a>
+
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="upload-mainitem">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Main Item</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Back</a>
+        <a href="#upload-detailitems" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="d" class="ui-btn-right">Next</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <br/><br/>
+
+        <fieldset class="ui-field-contain">
+
+            <select name="select-category" id="select-category" data-theme="b">
+                <option value="0">Select Category</option>
+                <option value="collection">Collection</option>
+                <option value="slideshow">Slideshow</option>
+            </select>
+        </fieldset>
+        <fieldset class="ui-field-contain">
+            <select name="select-subcategory" id="select-subcategory" data-theme="b">
+                <option value="0">Select SubCategory</option>
+                <option value="subcategory1">SubCategory1</option>
+                <option value="subcategory1">SubCategory2</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+            </select>
+        </fieldset>
+        <br/>
+        <div class="image-box">Tap to Add Image</div>
+
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="upload-detailitems">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Detail Items</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Main Item</a>
+        <a href="#upload-properties" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="d" class="ui-btn-right">Next</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <br/>
+        <div class="ui-grid-b">
+            <div class="ui-block-a"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-b"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-c"><div class="image-box">Tap to Add Image</div></div>
+        </div><!-- /grid-a -->
+        <div class="ui-grid-b">
+            <div class="ui-block-a"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-b"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-c"><div class="image-box">Tap to Add Image</div></div>
+        </div><!-- /grid-a -->
+        <div class="ui-grid-b">
+            <div class="ui-block-a"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-b"><div class="image-box">Tap to Add Image</div></div>
+            <div class="ui-block-c"><div class="image-box">Tap to Add Image</div></div>
+        </div><!-- /grid-a -->
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="upload-properties">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Properties</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Detail Items</a>
+        <a href="#upload-summary" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="d" class="ui-btn-right">Next</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <br/>
+        <div data-role="fieldcontain">
+            <input type="text" name="item_title" id="item_title" value="" placeholder="Enter Item Title">
+        </div>
+        <div data-role="fieldcontain">
+            <input type="text" name="item_cost" id="item_cost" value="" placeholder="Enter Item Cost">
+        </div>
+        <div data-role="fieldcontain">
+            <textarea cols="30" name="item_description" id="item_description"></textarea>
+        </div>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="upload-summary">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Summary</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Properties</a>
+        <a id="btn-upload" href="#" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="d" class="ui-btn-right">Upload</a>
+    </div><!-- /header -->
+
+    <div data-role="content" class="summary">
+        <div>
+            <div style="text-align: right;">
+                €
+            </div>
+            <hr/>
+            <p>Category: <span id="summary-category">Collection</span></p>
+            <p>Subcategory: <span id="summary-subcategory">Subcategory1</span></p>
+            <p>Description: <span id="summary-description">New Antique Item</span></p><br/>
+            <div style="text-align: center;"><img src="img/imageHolder.png" style="width:100%;" /></div>
+        </div>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="view-items">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Categories</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Back</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <ul data-role="listview">
+            <li><a href="#view-category">Collection<span class="ui-li-count">15</span></a></li>
+            <li><a href="#view-category">Slideshow<span class="ui-li-count">8</span></a></li>
+        </ul>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="view-category">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Collection</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Categories</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <ul data-role="listview">
+            <li><a href="#view-item"><img src="img/items/799017_thumb.jpg"/> <h3>Pol Desmet</h3><p>pol desmet</p></a></li>
+            <li><a href="#view-item"><img src="img/items/798998_thumb.jpg"/><h3>Pascal Sarfati</h3><p>pascal sarfati</p></a></li>
+        </ul>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="view-item">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Pol Desmet</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Collection</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <img src="img/items/799017_max.jpg" style="width:100%;"/>
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#change-category">Change Category</a></li>
+            <li><a href="#edit-properties">Edit Properties</a></li>
+            <li data-icon="false"><a href="#">Delete</a></li>
+            <li data-icon="false"><a href="#">Sold</a></li>
+            <li data-icon="false"><a href="#">De-activate</a></li>
+        </ul>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="change-category">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Change Category</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Pol Desmet</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <fieldset class="ui-field-contain">
+            <select name="category-to-change" id="category-to-change" data-theme="b">
+                <option value="0">Select Category</option>
+                <option value="collection">Collection</option>
+                <option value="slideshow">Slideshow</option>
+            </select>
+        </fieldset>
+        <fieldset class="ui-field-contain">
+            <select name="subcategory-to-change" id="subcategory-to-change" data-theme="b">
+                <option value="0">Select SubCategory</option>
+                <option value="subcategory1">SubCategory1</option>
+                <option value="subcategory1">SubCategory2</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+                <option value="subcategory1">SubCategory3</option>
+            </select>
+        </fieldset>
+        <br/>
+        <a href="#" id="save-category-changes" data-role="button" class="ui-btn-plain">Save Changes</a>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="edit-properties">
+
+    <div data-role="header" data-theme="b" data-position="fixed" class="ui-header ui-bar-b ui-header-fixed">
+        <h1>Edit Properties</h1>
+        <a href="#" data-rel="back" data-role="button"  data-corners="true" data-shadow="true" data-iconshadow="true" data-theme="b">Pol Desmet</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <br/>
+        <div data-role="fieldcontain">
+            <input type="text" name="item_title_edited" id="item_title_edited" value="Pol Desmet" placeholder="Enter Item Title">
+        </div>
+        <div data-role="fieldcontain">
+            <input type="text" name="item_cost_edited" id="item_cost_edited" value="" placeholder="Enter Item Cost">
+        </div>
+        <div data-role="fieldcontain">
+            <textarea cols="30" name="item_description_edited" id="item_description_edited"></textarea>
+        </div>
+        <br/>
+        <a href="#" id="save-property-changes" data-role="button" class="ui-btn-plain">Save Changes</a>
+    </div><!-- /ui-body wrapper -->
+</div><!-- /page -->
+
+<div data-role="page" id="formElements">
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Form Elements</h1>
+		<a class="ui-btn-active ui-state-persist" href="#" data-rel="back" data-theme="a">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+		
+		<div data-role="fieldcontain">
+		
+			<label>Some Fields and Inputs:</label>
+			
+			<br /><br />
+	
+			<input type="range" />
+			
+			<br /><br />
+			
+			<input type="search" />
+			
+			<br /><br />
+			
+			<input type="email" />
+			
+			<br />
+		
+		</div>
+		
+		<div data-role="fieldcontain">
+			<label for="slider">Select slider:</label>
+			<select name="slider" id="slider" data-role="slider">
+				<option value="off">OFF</option>
+				<option value="on">ON</option>
+			</select> 
+		</div>
+		
+		<div data-role="fieldcontain">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+				<legend>Choose a pet:</legend>
+					<input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
+					<label for="radio-choice-1">Cat</label>
+
+					<input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
+					<label for="radio-choice-2">Dog</label>
+
+					<input type="radio" name="radio-choice-1" id="radio-choice-3" value="choice-3"  />
+					<label for="radio-choice-3">Hamster</label>
+			</fieldset>
+		</div>
+		
+		<a disabled="disabled" data-role="button" class="ui-btn-plain">Inactive &lt;a&gt;</a>
+
+		<a data-role="button" class="ui-btn-plain">Active &lt;a&gt;</a>
+
+		<button disabled="disabled" class="ui-btn-plain">Inactive &lt;button&gt;</button>
+
+		<button class="ui-btn-plain">Active &lt;button&gt;</button>
+
+		<p><small>Does the above look funny? Consider it a bug in jQuery mobile where the classes from the underling &lt;button&gt; are not being attached to the new DOM</small></p>
+	
+	</div>
+	
+</div>
+  
+<div data-role="page" id="listViews">
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>List Example</h1>
+		<a href="#" data-rel="back" data-theme="a">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+		
+		<ul data-role="listview"> 
+			<li data-role="list-divider">Divider</li>
+			<li><a href="#">Anatomy of a page</a></li> 
+			<li><a href="#">Page transitions</a></li> 
+			<li><a href="#">Dialogs</a></li> 
+			<li><a href="#">Navigation: Ajax, hashes &amp; history</a></li> 
+			<li><a href="#">Link format examples</a></li> 
+			<li><a href="#">Theming pages</a></li>
+			<li><a href="#">Anatomy of a page</a></li> 
+			<li><a href="#">Page transitions</a></li> 
+			<li><a href="#">Dialogs</a></li> 
+			<li><a href="#">Navigation: Ajax, hashes &amp; history</a></li> 
+			<li><a href="#">Link format examples</a></li> 
+			<li><a href="#">Theming pages</a></li>
+			<li><a href="#">Anatomy of a page</a></li> 
+			<li><a href="#">Page transitions</a></li> 
+			<li><a href="#">Dialogs</a></li> 
+			<li><a href="#">Navigation: Ajax, hashes &amp; history</a></li> 
+			<li><a href="#">Link format examples</a></li> 
+			<li><a href="#">Theming pages</a></li>
+			<li><a href="#">Anatomy of a page</a></li> 
+			<li><a href="#">Page transitions</a></li> 
+			<li><a href="#">Dialogs</a></li> 
+			<li><a href="#">Navigation: Ajax, hashes &amp; history</a></li> 
+			<li><a href="#">Link format examples</a></li> 
+			<li><a href="#">Theming pages</a></li>
+		</ul> 
+		
+	</div>
+		
+</div>
+  
+<div data-role="page" id="headers"> 
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Headers</h1>
+		<a href="#" data-rel="back" data-theme="a">Back</a>
+		</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+	
+		<p>
+			The default bar is the blue, but you can also use the black by specifying <em>data-theme="b"</em>.
+		</p>
+		
+		<div data-role="header" data-position="inline">
+			<a href="#" data-rel="back" data-theme="a">Back</a>
+			<h1>Blue Bar</h1>
+			<a href="#" data-theme="a">Button</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-theme="b" data-position="inline">
+			<a href="#" data-rel="back" data-theme="b">Back</a>
+			<h1>Black Bar</h1>
+			<a href="#" data-theme="b">Button</a>
+		</div>
+	
+	</div>
+		
+</div>
+  
+<div data-role="page" id="headerButtons"> 
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Header Buttons</h1>
+		<a href="#" data-rel="back" data-theme="a">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+	
+		<p>
+			The various styled buttons you can place in a header:
+		</p>
+		
+		<div data-role="header" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-theme="a">Edit</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-theme="b">Black</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-theme="c">Delete</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-theme="d">Done</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-rel="back" data-icon="arrow-l" data-theme="a">Back</a>
+		</div>
+		
+		<br />
+		
+		<div data-role="header" data-theme="b" data-position="inline">
+			<h1>Page Title</h1>
+			<a href="#" data-rel="back" data-icon="arrow-l" data-theme="b">Back</a>
+		</div>
+	
+	</div>
+		
+</div>
+
+<div data-role="page" id="allDialogExample"> 
+ 
+	<div data-role="content"> 
+		<button data-theme="e">Button Style E</button>
+		<button data-theme="d">Button Style D</button>
+		<button data-theme="c">Button Style C</button>
+		<button data-theme="b">Button Style B</button>
+		<button data-theme="a">Button Style A</button>
+	</div>
+	
+</div>
+
+<div data-role="page" id="deleteDialogExample"> 
+ 
+	<div data-role="content"> 
+		<button data-theme="e">Delete Draft</button>
+		<button data-theme="a">Save Draft</button>
+		<button data-theme="b">Cancel</button>
+	</div>
+	
+</div>
+
+<div data-role="page" id="postDialogExample"> 
+ 
+	<div data-role="content"> 
+		<button data-theme="a">Post to Twitter</button>
+		<button data-theme="a">Post to Facebook</button>
+		<button data-theme="a">Post to YouTube</button>
+		<button data-theme="b">Cancel</button>
+	</div>
+	
+</div>
+  
+<div data-role="page" id="dialogs">
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Dialogs</h1>
+		<a href="#" data-rel="back" data-theme="a">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+	
+		<a href="#allDialogExample" class="ui-btn-plain" data-role="button" data-rel="dialog" data-transition="slideup">All the options</a>
+	
+		<a href="#deleteDialogExample" class="ui-btn-plain" data-role="button" data-rel="dialog" data-transition="slideup">Delete Example</a>
+	
+		<a href="#postDialogExample" class="ui-btn-plain" data-role="button" data-rel="dialog" data-transition="slideup">Post Something</a>
+	
+	</div>
+		
+</div>
+  
+<div data-role="page" id="footerTabs" data-theme="b">
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Footer Tabs</h1>
+		<a href="#" data-rel="back">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+	
+		Icons by Joseph Wain / <a href="http://www.glyphish.com" target="_blank">glyphish.com</a>. Licensed under the <a href="http://creativecommons.org/licenses/by/3.0/us/" target="_blank">Creative Commons Attribution 3.0 United States License</a>.
+	
+	</div>
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" id="tabA" data-icon="custom">One</a></li>
+				<li><a href="#" id="tabB" data-icon="custom" class="ui-btn-active">Two</a></li>
+				<li><a href="#" id="tabC" data-icon="custom">Three</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+		
+</div>
+  
+<div data-role="page" id="popups" data-theme="b">
+ 
+	<div data-role="header" data-position="fixed">
+		<h1>Popups</h1>
+		<a href="#" data-rel="back">Back</a>
+	</div><!-- /header --> 
+ 
+	<div data-role="content"> 
+	
+		<a href="#popupBasic" data-rel="popup" data-role="button" class="ui-btn-plain">Open Popup</a>
+
+		<a href="#popupOverlay" data-rel="popup" data-role="button" class="ui-btn-plain">Open Popup with Overlay</a>
+
+		<a href="#popupiOS" data-rel="popup" data-role="button" class="ui-btn-plain">iOS Style Popup</a>
+
+		<div data-role="popup" data-transition="fade" id="popupBasic">
+			<p>This is a completely basic popup, no options set.<p>
+		</div>
+
+		<div data-role="popup" data-transition="fade" data-overlay-theme="a" id="popupOverlay">
+			<p>This is a completely basic popup, but with an overlay<p>
+		</div>
+
+		<div data-role="popup" data-transition="fade" data-theme="a" data-position-to="window" id="popupiOS">
+			<img src="ios_inspired/images/tick.png">
+			<p>Saved<p>
+		</div>
+	
+	</div>
+		
+</div>
+
+
+</body> 
+</html> 
